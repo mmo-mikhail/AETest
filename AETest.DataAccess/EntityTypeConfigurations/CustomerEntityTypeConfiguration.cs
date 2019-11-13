@@ -12,7 +12,7 @@ namespace AETest.DataAccess.EntityTypeConfigurations
 
             builder.Property(t => t.FirstName).HasColumnName("FirstName").IsRequired();
             builder.Property(t => t.LastName).HasColumnName("LastName").IsRequired();
-            builder.Property(t => t.DateOfBirth).HasColumnName("DateOfBirth").IsRequired(false);
+            builder.Property(t => t.DateOfBirth).HasColumnName("DateOfBirth").IsRequired();
         }
     }
 }

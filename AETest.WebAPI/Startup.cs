@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AETest.DataAccess;
+﻿using AETest.DataAccess;
 using AETest.DataAccess.Repositories;
 using AETest.WebAPI.HealthChecks;
 using AETest.WebAPI.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace AETest.WebAPI
 {
@@ -44,14 +38,18 @@ namespace AETest.WebAPI
             // Configure DAL
             services.AddDbContext<IDbContext, DatabaseContext>(options =>
             {
-                options.UseSqlServer(Configuration["ConnectionString"],
-                    sqlServerOptionsAction: sqlOptions =>
-                    {
-                        sqlOptions.EnableRetryOnFailure(
-                            maxRetryCount: 1,
-                            maxRetryDelay: TimeSpan.FromSeconds(10),
-                            errorNumbersToAdd: null);
-                    });
+                options.UseInMemoryDatabase("inmemorydb");
+
+                // Uncomment following code to setup connection to real db:
+
+                //options.UseSqlServer(Configuration["ConnectionString"],
+                //    sqlServerOptionsAction: sqlOptions =>
+                //    {
+                //        sqlOptions.EnableRetryOnFailure(
+                //            maxRetryCount: 1,
+                //            maxRetryDelay: TimeSpan.FromSeconds(10),
+                //            errorNumbersToAdd: null);
+                //    });
             }, ServiceLifetime.Scoped);
 
             services.AddTransient(typeof(IEntityRepository<>), typeof(EntityRepository<>));

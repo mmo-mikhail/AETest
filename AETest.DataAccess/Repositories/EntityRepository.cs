@@ -33,15 +33,15 @@ namespace AETest.DataAccess.Repositories
             return UseAndSave(() => _context.Delete(entity));
         }
 
+        public virtual async Task<TEntity> FindEntity(Expression<Func<TEntity, bool>> criteria)
+        {
+            return await Entities.FirstOrDefaultAsync(criteria);
+        }
+
         protected async Task UseAndSave(Func<Task> action)
         {
             await action.Invoke();
             await _context.SaveChanges();
-        }
-
-        public virtual async Task<TEntity> FindEntity(Expression<Func<TEntity, bool>> criteria)
-        {
-            return await Entities.FirstOrDefaultAsync(criteria);
         }
     }
 }

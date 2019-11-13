@@ -17,7 +17,8 @@ namespace AETest.WebAPI.Controllers
             _customerRepo = customerRepo;
         }
 
-        [HttpGet("{name:string}")]
+        //[HttpGet("{name:string}")]
+        [HttpGet("GetByName")]
         public async Task<ActionResult<CustomerModel>> Get(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -30,19 +31,19 @@ namespace AETest.WebAPI.Controllers
             {
                 return NotFound();
             }
-            return new CustomerModel
+            return Ok(new CustomerModel
             {
                 Id = domainCustomer.Id,
                 FirstName = domainCustomer.FirstName,
                 LastName = domainCustomer.LastName,
                 DateOfBirth = domainCustomer.DateOfBirth
-            };
+            });
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CustomerModel customerModel)
         {
-            if (customerModel.Id < 0)
+            if (customerModel == null || customerModel.Id < 0 || !ModelState.IsValid)
             {
                 return BadRequest();
             }
@@ -67,6 +68,7 @@ namespace AETest.WebAPI.Controllers
                 }
                 existingCustomer.FirstName = customerModel.FirstName;
                 existingCustomer.LastName = customerModel.LastName;
+                existingCustomer.DateOfBirth = customerModel.DateOfBirth;
                 await _customerRepo.Update(existingCustomer);
             }
 
@@ -76,7 +78,7 @@ namespace AETest.WebAPI.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete([FromBody] int customerId)
         {
-            if (customerId < 0)
+            if (customerId < 1)
             {
                 return BadRequest();
             }

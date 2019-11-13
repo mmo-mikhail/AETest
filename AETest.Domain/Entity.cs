@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AETest.Domain
+﻿namespace AETest.Domain
 {
-    public class Entity
+    /// <summary>
+    /// Base class for all POCO objects
+    /// </summary>
+    public abstract class Entity
     {
     }
 }
