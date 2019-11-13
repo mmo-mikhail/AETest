@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace AETest.WebAPI.HealthChecks
 {
+    /// <summary>
+    /// Resresents simpliest health check
+    /// </summary>
     public class MainHealthCheck : IHealthCheck
     {
         public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context,

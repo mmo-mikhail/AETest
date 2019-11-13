@@ -5,7 +5,7 @@ using AutoFixture.Xunit2;
 namespace AETest.WebAPI.Tests
 {
     /// <summary>
-    /// Specifically customizes linq2db POCO objects to exclude direct (one-to-one) assoiations
+    /// Used to mock unit test method parameters
     /// </summary>
     public class AutoMoqDataAttribute : AutoDataAttribute
     {

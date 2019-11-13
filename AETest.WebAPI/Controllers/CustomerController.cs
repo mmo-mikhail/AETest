@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AETest.WebAPI.Controllers
 {
+    /// <summary>
+    /// This API allows to perform simple CRUD operations on customer
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class CustomerController : ControllerBase
@@ -17,8 +20,7 @@ namespace AETest.WebAPI.Controllers
             _customerRepo = customerRepo;
         }
 
-        //[HttpGet("{name:string}")]
-        [HttpGet("GetByName")]
+        [HttpGet("FindByName")]
         public async Task<ActionResult<CustomerModel>> Get(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -26,7 +28,8 @@ namespace AETest.WebAPI.Controllers
                 return BadRequest();
             }
 
-            var domainCustomer = await _customerRepo.FindEntity(c => c.FirstName == name || c.LastName == name);
+            var domainCustomer = await _customerRepo
+                .FindEntity(c => c.FirstName.Contains(name) || c.LastName.Contains(name));
             if (domainCustomer == null)
             {
                 return NotFound();

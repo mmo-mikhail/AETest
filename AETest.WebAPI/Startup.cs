@@ -72,6 +72,10 @@ namespace AETest.WebAPI
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors(builder =>
+                builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
+
             app.UseMvc();
 
             app.UseHealthChecks("/health", new HealthCheckOptions()

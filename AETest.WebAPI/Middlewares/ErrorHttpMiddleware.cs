@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace AETest.WebAPI.Middlewares
 {
+    /// <summary>
+    /// Top level middleware that handles exceptions, log them and returns simple error message
+    /// </summary>
     public class ErrorHttpMiddleware
     {
         private readonly RequestDelegate _next;
